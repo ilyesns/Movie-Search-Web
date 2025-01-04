@@ -13,10 +13,8 @@ const fetchSuggestions = async (
 ): Promise<string[]> => {
   try {
     const { movies } = await fetchMovies(query, tab);
-
     return movies.map((movie: any) => movie.Title || "");
   } catch (error) {
-    console.error("Error fetching suggestions:", error);
     return [];
   }
 };

@@ -10,7 +10,7 @@ export const Tabs = ({
   selectedTab: string;
   onSelect: (tab: string) => void;
   handleSearch: (query: string) => void;
-  fetchSuggestions: (query: string) => Promise<string[]>;
+  fetchSuggestions: (query: string, tab: string) => Promise<string[]>;
 }) => {
   const tabs = ["movie", "series", "episode"];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -89,6 +89,7 @@ export const Tabs = ({
           <div className=" md:flex-auto">
             <SearchBar
               onSearch={handleSearch}
+              selectedTab={selectedTab}
               fetchSuggestions={fetchSuggestions}
             />
           </div>

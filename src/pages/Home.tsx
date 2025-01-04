@@ -12,10 +12,16 @@ interface LayoutContext {
   searchQuery: string;
   currentPage: number;
   setCurrentPage: (page: number) => void;
+  setSearchQuery: (page: string) => void;
 }
 const Home = () => {
-  const { selectedTab, searchQuery, currentPage, setCurrentPage } =
-    useOutletContext<LayoutContext>();
+  const {
+    selectedTab,
+    searchQuery,
+    currentPage,
+    setCurrentPage,
+    setSearchQuery,
+  } = useOutletContext<LayoutContext>();
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,16 +32,21 @@ const Home = () => {
   const loadMovies = async (page: number, query: string = searchQuery) => {
     try {
       setIsLoading(true);
-      const { movies, total } = await fetchMovies(
+      const { movies: newMovies, total } = await fetchMovies(
         query || "horror",
         selectedTab,
         page
       );
 
-      setMovies(movies);
-      setTotalPages(total);
+      if (JSON.stringify(newMovies) !== JSON.stringify(movies)) {
+        setMovies(newMovies); // Update only if movies have changed
+      }
+      if (total !== totalPages) {
+        setTotalPages(total); // Update only if totalPages has changed
+      }
       setIsLoading(false);
     } catch (error: any) {
+      console.log("heyyy ", error);
       setIsLoading(false);
       setIsError(true);
       setErrorMessage(error?.message || "Something went wrong!");
@@ -43,15 +54,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    loadMovies(1); // Load movies when tab or search changes
-  }, [selectedTab, searchQuery]);
-  useEffect(() => {
     setIsError(false);
-  }, [selectedTab]);
-
-  useEffect(() => {
-    loadMovies(currentPage); // Load movies when the page changes
-  }, [currentPage]);
+    setSearchQuery("");
+    loadMovies(currentPage);
+  }, [selectedTab, searchQuery, currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

@@ -23,8 +23,8 @@ export const MovieDetails: React.FC = () => {
     const loadMovieDetails = async () => {
       try {
         setIsLoading(true);
-        const data = await fetchMovieDetails(id!); // Fetch data using the id
-        setMovie(data); // Set the movie data
+        const data = await fetchMovieDetails(id!); 
+        setMovie(data); 
         setError(null);
       } catch (err: any) {
         setError("Failed to load movie details. Please try again.");

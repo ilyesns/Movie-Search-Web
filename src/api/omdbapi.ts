@@ -12,7 +12,6 @@ export const fetchMovies = async (
     `${BASE_URL}?s=${query}&type=${type}&page=${page}&apikey=${API_KEY}`
   );
   const data = await response.json();
-
   if (data.Response === "False") {
     throw new Error(data.Error);
   }

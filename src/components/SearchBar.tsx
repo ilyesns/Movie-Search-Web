@@ -3,19 +3,23 @@ import { useState, useEffect } from "react";
 export const SearchBar = ({
   onSearch,
   fetchSuggestions,
+  selectedTab,
 }: {
   onSearch: (query: string) => void;
-  fetchSuggestions: (query: string) => Promise<string[]>;
+  selectedTab: string;
+  fetchSuggestions: (query: string, tab: string) => Promise<string[]>;
 }) => {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
   useEffect(() => {
     const loadSuggestions = async () => {
-      if (query.trim().length > 1) {
+      if (query.trim().length > 2) {
         try {
-          const fetchedSuggestions = await fetchSuggestions(query.trim());
+          const fetchedSuggestions = await fetchSuggestions(
+            query.trim(),
+            selectedTab
+          );
           setSuggestions(fetchedSuggestions);
           setShowSuggestions(true);
         } catch (error) {

@@ -5,12 +5,12 @@ import { Tabs } from "../components/Tabs";
 export const Layout = ({
   fetchSuggestions,
 }: {
-  fetchSuggestions: (query: string) => Promise<string[]>;
+  fetchSuggestions: (query: string, tab: string) => Promise<string[]>;
 }) => {
   const [selectedTab, setSelectedTab] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate(); // To programmatically navigate
+  const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -20,7 +20,7 @@ export const Layout = ({
 
   useEffect(() => {
     setSearchQuery("");
-    setCurrentPage(1);
+
     navigate("/");
   }, [selectedTab]);
 
@@ -38,6 +38,7 @@ export const Layout = ({
           selectedTab,
           searchQuery,
           currentPage,
+          setSearchQuery,
           setCurrentPage,
         }}
       />

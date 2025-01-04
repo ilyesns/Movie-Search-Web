@@ -12,16 +12,16 @@ export const MovieCard = ({ movie }: { movie: Movie }) => {
   return (
     <div onClick={handleClick}>
       <div className="py-3 max-w-[350px]  hover:cursor-pointer sm:mx-auto">
-        <div className="bg-white shadow-lg border-gray-100 h-80	 border sm:rounded-3xl p-8 flex space-x-8">
+        <div className="bg-white shadow-lg border-gray-100 h-80	 border rounded-3xl p-8 flex items-center flex-col sm:flex-row space-y-8 sm:space-x-8">
           <img
-            className="rounded-3xl w-52 h-60 shadow-lg"
+            className="rounded-3xl w-32 h-40  sm:w-52 sm:h-60 shadow-lg"
             src={movie.Poster}
             alt="img"
           />
 
-          <div className="flex flex-col w-1/2 space-y-4">
+          <div className="flex  justify-between  sm:flex-col sm:w-1/2 sm:space-y-4">
             <div className="flex justify-between items-start">
-              <h2 className="text-lg md:text-1xl font-bold">
+              <h2 className="text-sm sm:text-1xl font-bold">
                 {movie.Title != undefined && movie!.Title.length > 30
                   ? `${movie!.Title.slice(0, 30)}...`
                   : movie.Title}
